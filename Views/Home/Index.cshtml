@@ -1,0 +1,67 @@
+﻿@{
+    ViewBag.Title = "Home Page";
+}
+
+
+    <div class="row">
+        <h1>Recon</h1>
+        <table id="recon" class="table table-bordered table-hover">
+            <thead>
+                <tr>
+                    <th>Full Name</th>
+                    <th>Birth Date</th>
+                    <th>Event</th>
+                </tr>
+            </thead>
+            <tbody></tbody>
+        </table>
+
+    </div>
+
+
+
+
+@section scripts
+        {
+    <script>
+
+        $(document).ready(function () {
+
+            RefreshReconTable();
+            window.setInterval(RefreshReconTable, 5000);
+
+            function RefreshReconTable() {
+                $("#recon").DataTable().clear().draw();
+                $("#recon").DataTable().destroy();
+
+                 $("#recon").DataTable({
+                    ajax: {
+                        url: "/api/Recon/getRecon",
+                        dataSrc: ""
+                    },
+                    "initComplete": function (settings, json) {
+
+                    },
+                    "paging": false,
+                    "aaSorting": [[0, 'asc']],
+                    columns: [
+                        {
+                            data: "Full_Name"
+                        },
+                        {
+                            data: "Birth_Date"
+                        },
+                        {
+                            data: "Event_Name"
+                        }
+                    ]
+                });
+            }
+
+
+        });
+
+
+
+    </script>
+}
